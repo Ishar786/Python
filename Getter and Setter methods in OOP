@@ -1,0 +1,98 @@
+#Getter and Setter methods in OOP
+
+#Banking application -> ATM Machine
+
+class AtmMachine:
+    # constructor (special function) -> superpower
+    def __init__(self):
+        self.pin = "123"
+        self.__balance = 10000 #private variable
+        #self.menu()
+
+    #getter method
+    def get_balance(self):
+        return self.__balance
+    
+    #setter method
+    def set_balance(self, new_balance):
+        if type(new_balance) == int:            
+            self.__balance = new_balance
+        else:
+            print("don't play at all")
+
+
+    def menu(self):
+        user_input = input(
+            """
+            Hi how can I help yu?
+
+            1. press 1 to create pin
+            2. press 2 to change pin
+            3. press 3 to check balance
+            4. press 4 to withdraw
+            5 Anything to exit
+
+            """
+            
+        )
+
+        if user_input == "1":
+            #create a pin
+            self.create_pin()
+        elif user_input == "2":
+            #change pin
+            self.change_pin()
+        elif user_input == "3":
+            #check balance
+            self.check_balance()
+        elif user_input == "4":
+            #withdraw
+            self.withdraw_balance()
+        else:
+            exit()
+    def create_pin(self):
+        user_pin = input("enter your pin: ")
+        self.pin = user_pin
+
+        user_balance = int(input("enter balance: "))
+        self.__balance = user_balance
+
+        print("pin created successfully")
+        self.menu()
+    
+    def change_pin(self):
+        old_pin = input("enter your old pin: ")
+
+        if old_pin == self.pin:
+            new_pin = input("enter the new pin: ")
+            self.pin = new_pin
+            print("pin changed succesfully!")
+    
+        else:
+            print("invalid pin")
+            self.menu()
+    
+    def check_balance(self):
+        user_pin = input("enter your pin: ")
+        if user_pin == self.pin:
+            print(f"your balance is {self.__balance}")
+            
+
+        else:
+            print("your pin is incorrect, Please try again")
+            self.menu()
+
+    def withdraw_balance(self):
+        user_pin = input("enter your pin: ")
+        if user_pin == self.pin:
+            #allow to withdraw
+            amount = int(input("enter the amount: "))
+            if amount<= self.__balance:
+                self.__balance = self.__balance-amount
+                print(f"you have withdrawn {amount}. Your balance is {self.__balance}") 
+            else:
+                print("insufficient balance")
+            
+        else:
+            print("your pin is incorrect, please try again")
+            self.menu()
