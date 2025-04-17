@@ -1,0 +1,76 @@
+import random as r
+import sys as s
+
+class Rnd:
+  def __init__(self):
+    print("enter exit to end the game")
+
+  def rand(self):
+    while True:
+      self.a = r.randint(1,9)
+      self.b = r.randint(10,20)
+      self.c = r.randint(1,99)
+      self.d = r.randint(1,99)
+      self.e = r.randint(1,99)
+
+      li = [self.sum, self.mul, self.div]
+      choosen = r.choice(li)
+      choosen()
+
+
+  def sum(self):
+    correct = self.a + self.b + self.c + self.d + self.e
+    while True:
+      try:
+        x = input(f"enter the sum of the following numbers {self.a} + {self.b} + {self.c} + {self.d} + {self.e}: ")
+        if x.lower() == 'exit':
+          print("Thanks for playing!")
+          s.exit()
+        x = int(x)
+        if x == self.a + self.b + self.c + self.d + self.e:
+          print("correct")
+          break
+        else:
+          print("incorrect, try again")
+      except ValueError:
+        print("Invalid input. Please enter a number.")
+
+  def mul(self):
+    correct = self.a * self.b
+    while True:
+      try:
+        y = input(f"enter the multiply of the following numbers {self.a} * {self.b}: ")
+        if y.lower() == 'exit':
+          print("Thanks for playing!")
+          s.exit()
+        y = int(y)
+        if y == self.a * self.b:
+          print("correct")
+          break
+        else:
+          print("incorrect, try again")
+      except ValueError:
+        print("Invalid input. Please enter a number.")
+
+  def div(self):
+        dividend = self.a
+        divisor = self.b
+        correct = dividend / divisor
+        while True:
+          try:
+                  z = input(f"Enter the result of {dividend} / {divisor}: ")
+                  if z.lower() == 'exit':
+                    print("Thanks for playing!")
+                    s.exit()
+                  z = float(z)
+                  if abs(z - correct) < 0.01:
+                      print("Correct!")
+                      break
+                  else:
+                      print("Incorrect, try again.")
+          except ValueError:
+                  print("Invalid input. Please enter a number.")
+
+if __name__ == "__main__":
+  n = Rnd()
+  n.rand()
