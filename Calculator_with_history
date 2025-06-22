@@ -1,0 +1,88 @@
+HISTORY_FILE = 'history.txt'
+
+def show_history():
+    try:
+        with open(HISTORY_FILE, 'r') as file:
+            history = file.readlines()
+            if len(history) == 0:
+                print("No history available.")
+            else:
+                for line in reversed(history):
+                    print(line.strip())
+            file.close()
+    except FileNotFoundError:
+        print("No history file found. Please perform some calculations first.")
+
+def clear_history():
+    try:
+        with open(HISTORY_FILE, 'w') as file:
+            file.write('')
+            file.close()
+        print("History cleared.")
+    except Exception as e:
+        print(f"An error occurred while clearing history: {e}")
+
+
+def save_to_history(expression, result):
+    try:
+        with open(HISTORY_FILE, 'a') as file:
+            file.write(f"{expression} = {result}\n")
+            file.close()
+    except Exception as e:
+        print(f"An error occurred while saving to history: {e}")
+
+    
+def calculate(expression):
+    parts = expression.split(" ")
+    if len(parts) != 3:
+        print("Invalid expression. Please use the format: operand1 operator operand2")
+    else:
+        try:
+            operand1 = float(parts[0])
+            operator = parts[1]
+            operand2 = float(parts[2])
+            
+            if operator == '+':
+                result = operand1 + operand2
+            elif operator == '-':
+                result = operand1 - operand2
+            elif operator == '*':
+                result = operand1 * operand2
+            elif operator == '/':
+                if operand2 == 0:
+                    print("Error: Division by zero.")
+                    return
+                result = operand1 / operand2
+            else:
+                print("Invalid operator. Please use +, -, *, or /.")
+                return
+            
+            print(f"Result: {result}")
+            save_to_history(expression, result)
+        except ValueError:
+            print("Invalid input. Please enter numbers for operands.")
+
+def main():
+    while True:
+        print("\nCalculator with History")
+        print("1. Calculate")
+        print("2. Show History")
+        print("3. Clear History")
+        print("4. Exit")
+        
+        choice = input("Choose an option: ")
+        
+        if choice == '1':
+            expression = input("Enter expression (operand1 operator operand2): ")
+            calculate(expression)
+        elif choice == '2':
+            show_history()
+        elif choice == '3':
+            clear_history()
+        elif choice == '4':
+            print("Exiting the calculator.")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+if __name__ == "__main__":
+    main()
